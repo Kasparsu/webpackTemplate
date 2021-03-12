@@ -4,27 +4,25 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "minireset.css": "0.0.5",
-    "vue": "^2.6.10",
-    "vue-loader": "^15.7.1",
-    "webpack": "^4.41.0"
-  },
-  "devDependencies": {
-    "css-loader": "^3.2.0",
-    "html-webpack-plugin": "^3.2.0",
-    "http-server": "^0.11.1",
-    "node-sass": "^4.12.0",
-    "raw-loader": "^3.1.0",
-    "sass-loader": "^8.0.0",
-    "style-loader": "^1.0.0",
-    "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.1"
+    "css-loader": "^5.1.2",
+    "html-webpack-plugin": "^5.3.1",
+    "minireset.css": "^0.0.7",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "vue": "^2.6.12",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^5.25.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-html-plugin": "^0.1.1"
   },
   "scripts": {
     "webpack": "webpack",
     "dev": "npm run webpack -- --mode development",
     "watch": "npm run dev -- --watch",
-    "start": "webpack-dev-server"
+    "start": "webpack serve"
   },
   "keywords": [],
   "author": "",
