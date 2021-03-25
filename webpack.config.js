@@ -1,5 +1,6 @@
 const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const isDev = process.env.NODE_ENV === 'development';
 module.exports = {
     entry: './src/main.js',
@@ -15,36 +16,41 @@ module.exports = {
     },
     module: {
         rules: [
-          {
-            test: /\.s[ac]ss$/i,
-            use: [
-              // Creates `style` nodes from JS strings
-              'style-loader',
-              // Translates CSS into CommonJS
-              'css-loader',
-              // Compiles Sass to CSS
-              'sass-loader',
-            ],
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    // Creates `style` nodes from JS strings
+                    'style-loader',
+                    // Translates CSS into CommonJS
+                    'css-loader',
+                    // Compiles Sass to CSS
+                    'sass-loader',
+                ],
             },
             {
                 test: /\.css$/i,
                 use: [
-                  // Creates `style` nodes from JS strings
-                  'style-loader',
-                  // Translates CSS into CommonJS
-                  'css-loader',
+                    // Creates `style` nodes from JS strings
+                    'style-loader',
+                    // Translates CSS into CommonJS
+                    'css-loader',
                 ],
-                },
+            },
+            {
+                test: /\.vue$/i,
+                use: ['vue-loader']
+            }
         ],
-        
+
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './index.html'  
-        })
+            template: './index.html'
+        }),
+        new VueLoaderPlugin()
     ],
     resolve: {
-        extensions: [ '.js', '.vue' ],
+        extensions: ['.js', '.vue'],
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
         }
