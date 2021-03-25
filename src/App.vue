@@ -1,33 +1,17 @@
 <template>
     <div>
         <input type="text" v-model="message" @keypress.enter="addItem"><button @click="addItem">Add</button>
-        <h1>All Items</h1>
-        <ul>
-            <li v-for="(item,index) in items" :key="item.id">
-                <input type="checkbox" v-model="item.isDone">
-                {{item.name}}
-            </li>
-        </ul>
-        <h1>Done Items</h1>
-        <ul>
-            <li v-for="(item,index) in doneItems" :key="item.id">
-                <input type="checkbox" v-model="item.isDone">
-                {{item.name}}
-            </li>
-        </ul>
-        <h1>To Do Items</h1>
-        <ul>
-            <li v-for="(item,index) in toDoItems" :key="item.id">
-                <input type="checkbox" v-model="item.isDone">
-                {{item.name}}
-            </li>
-        </ul>
+        <item-list title="All Items" :items="items"></item-list>
+        <item-list title="Done Items" :items="doneItems"></item-list>
+        <item-list title="To Do Items" :items="toDoItems"></item-list>
     </div>
 </template>
 
 <script>
+    import ItemList from "./components/ItemList";
     export default {
         name: "App",
+        components: {ItemList},
         data(){
             return {
                 message: '',
@@ -54,7 +38,7 @@
             doneItems(){
                 return this.items.filter(item => item.isDone);
             },
-            toDoItems(){
+            toDoItems() {
                 return this.items.filter(item => !item.isDone);
             }
         }
