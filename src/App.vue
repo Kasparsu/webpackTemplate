@@ -3,7 +3,9 @@
         <section class="section">
             <button class="button" @click="prev" :disabled="!info.prev">Prev</button>
             <button class="button is-pulled-right" @click="next" :disabled="!info.next">Next</button>
-
+            <div>
+                <button class="button" v-for="num in pageNumbers" :key="num">{{num}}</button>
+            </div>
             <div class="columns is-multiline mt-3">
                 <div class="column is-one-fifth" v-for="character in characters" :key="character.id">
                     <card :character="character"></card>
@@ -29,7 +31,8 @@
             return {
                 info: {
                     prev: null,
-                    next: null
+                    next: null,
+                    pages: 0
                 },
                 characters: []
             }
@@ -46,6 +49,14 @@
                     this.info = response.data.info;
                     this.characters = response.data.results;
                 });
+            }
+        },
+        computed: {
+            pageNumbers(){
+                // [null,null,null] [0,1,2]
+                let pages = [...Array(this.info.pages+1).keys()];
+                pages.shift();
+                return pages;
             }
         }
     }
