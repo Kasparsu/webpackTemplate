@@ -3,9 +3,7 @@
         <section class="section">
             <button class="button" @click="prev" :disabled="!info.prev">Prev</button>
             <button class="button is-pulled-right" @click="next" :disabled="!info.next">Next</button>
-            <div>
-                <button class="button" v-for="num in pageNumbers" :key="num">{{num}}</button>
-            </div>
+            <pagination :count="info.pages" :current="current" @navigate="goTo"></pagination>
             <div class="columns is-multiline mt-3">
                 <div class="column is-one-fifth" v-for="character in characters" :key="character.id">
                     <card :character="character"></card>
@@ -18,9 +16,10 @@
 <script>
     import axios from 'axios';
     import Card from "./components/Card";
+    import Pagination from "./components/Pagination";
     export default {
         name: "App",
-        components: {Card},
+        components: {Pagination, Card},
         created(){
             axios.get('https://rickandmortyapi.com/api/character').then(response => {
                 this.info = response.data.info;
@@ -34,7 +33,8 @@
                     next: null,
                     pages: 0
                 },
-                characters: []
+                characters: [],
+                current: 1,
             }
         },
         methods: {
@@ -43,12 +43,26 @@
                     this.info = response.data.info;
                     this.characters = response.data.results;
                 });
+                this.current--;
             },
             next(){
                 axios.get(this.info.next).then(response => {
                     this.info = response.data.info;
                     this.characters = response.data.results;
                 });
+                this.current++;
+            },
+            goTo(page){
+                axios.get('https://rickandmortyapi.com/api/character/',
+                    {
+                        params: {
+                            page: page
+                        }
+                    }).then(response => {
+                    this.info = response.data.info;
+                    this.characters = response.data.results;
+                });
+                this.current=page;
             }
         },
         computed: {
