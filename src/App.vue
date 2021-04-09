@@ -21,10 +21,7 @@
         name: "App",
         components: {Pagination, Card},
         created(){
-            axios.get('https://rickandmortyapi.com/api/character').then(response => {
-                this.info = response.data.info;
-                this.characters = response.data.results;
-            });
+            this.getData('https://rickandmortyapi.com/api/character');
         },
         data(){
             return {
@@ -39,38 +36,22 @@
         },
         methods: {
             prev(){
-                axios.get(this.info.prev).then(response => {
-                    this.info = response.data.info;
-                    this.characters = response.data.results;
-                });
+                this.getData(this.info.prev);
                 this.current--;
             },
             next(){
-                axios.get(this.info.next).then(response => {
-                    this.info = response.data.info;
-                    this.characters = response.data.results;
-                });
+                this.getData(this.info.next);
                 this.current++;
             },
             goTo(page){
-                axios.get('https://rickandmortyapi.com/api/character/',
-                    {
-                        params: {
-                            page: page
-                        }
-                    }).then(response => {
+                this.getData('https://rickandmortyapi.com/api/character/?page='+ page);
+                this.current=page;
+            },
+            getData(url){
+                axios.get(url).then(response => {
                     this.info = response.data.info;
                     this.characters = response.data.results;
                 });
-                this.current=page;
-            }
-        },
-        computed: {
-            pageNumbers(){
-                // [null,null,null] [0,1,2]
-                let pages = [...Array(this.info.pages+1).keys()];
-                pages.shift();
-                return pages;
             }
         }
     }
